@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>الوحدة التعليمية | Crocodile</title>
+<style>
+:root{--bg:#101114;--panel:#1b1d22;--panel2:#22252b;--gold:#d6ad55;--gold2:#f0d38b;--text:#f5f2ea;--muted:#aaa7a0;--line:#393a3e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;padding:18px}
+.wrap{max-width:900px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 2px 18px;margin-bottom:18px}
+.brand{font-weight:bold;color:var(--gold);font-size:22px}.sub{color:var(--muted);font-size:13px;margin-top:5px}
+h1{font-size:23px;margin:0;color:var(--gold2)}h2{font-size:18px;margin:0 0 14px;color:var(--gold2)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 8px 24px #0003}
+label{display:block;color:var(--muted);font-size:14px;margin:0 0 8px}
+.days{display:flex;flex-wrap:wrap;gap:9px}
+.days label{display:flex;align-items:center;gap:7px;background:#111317;border:1px solid #44464d;border-radius:9px;padding:9px 12px;margin:0;color:var(--text)}
+.days input{width:auto;accent-color:var(--gold);margin:0}
+input,textarea,select{width:100%;background:#111317;border:1px solid #44464d;border-radius:10px;color:var(--text);padding:12px;font:inherit;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}select{border:1px solid #44464d;border-radius:10px;color:var(--text);padding:12px;font:inherit}textarea{min-height:70px;resize:vertical}
+.field{margin-bottom:12px}.date-row{display:flex;gap:8px;align-items:center;margin:8px 0}.date-row input{flex:1}.point{display:flex;gap:8px;align-items:center;margin:9px 0}.point input{flex:1}
+button{font:inherit;cursor:pointer;border:1px solid var(--gold);border-radius:10px;padding:10px 14px;background:var(--gold);color:#171717;font-weight:bold}
+button.secondary{background:transparent;color:var(--gold2)}button.danger{border-color:#a74b4b;color:#ffb7b7;background:transparent}
+button.small{padding:8px 11px;font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 8px}
+.drill{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.drillhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--gold2);font-weight:bold}
+.drillgrid{display:grid;grid-template-columns:1fr 170px;gap:12px}
+.empty{color:var(--muted);font-size:13px}.status{color:var(--gold2);font-size:13px;min-height:20px;margin-top:8px}
+footer{text-align:center;color:#777;font-size:12px;margin:25px 0 8px}
+@media(max-width:600px){body{padding:11px}.card{padding:14px}.drillgrid{grid-template-columns:1fr}.top{align-items:flex-start}h1{font-size:20px}}
+@media print{body{background:#fff;color:#111;padding:0}.wrap{max-width:none}.top{border-color:#bbb}.brand,h1,h2,.drillhead{color:#222}.card,.drill{background:#fff;border:1px solid #aaa;box-shadow:none;break-inside:avoid}input,textarea{background:#fff;color:#111;border:0;border-bottom:1px solid #aaa;padding:5px 0}.no-print,button,.status{display:none!important}label{color:#444}.sub,footer{color:#555}.point input{border-bottom:1px solid #aaa}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div><div class="brand">CROCODILE SWIMMING</div><div class="sub">نموذج إعداد الوحدة التعليمية</div></div>
+ <h1>الوحدة التعليمية</h1>
+</header>
+
+<section class="card">
+ <div class="field"><label for="unitName">اسم / رقم الوحدة التعليمية</label><input id="unitName" placeholder="مثال: الوحدة السابعة – السباحة الحرة"></div>
+ <div class="field">
+  <label>تواريخ تنفيذ الوحدة (يمكن إضافة أكثر من تاريخ)</label>
+  <div id="dates"></div>
+  <button type="button" class="secondary small no-print" onclick="addDate()">＋ إضافة تاريخ</button>
+ </div>
+ <div class="field"><label for="level">المستوى</label>
+  <select id="level">
+   <option value="">اختر المستوى</option>
+   <option>المستوى الأول</option>
+   <option>المستوى الثاني</option>
+   <option>المستوى الثالث</option>
+   <option>المستوى الرابع</option>
+   <option>المستوى الخامس</option>
+   <option>المستوى السادس</option>
+   <option>مستوى متقدم</option>
+  </select>
+ </div>
+ <div class="field">
+  <label>أيام تنفيذ الوحدة التعليمية (يمكن اختيار أكثر من يوم)</label>
+  <div class="days" id="days">
+   <label><input type="checkbox" value="السبت"> السبت</label>
+   <label><input type="checkbox" value="الأحد"> الأحد</label>
+   <label><input type="checkbox" value="الإثنين"> الإثنين</label>
+   <label><input type="checkbox" value="الثلاثاء"> الثلاثاء</label>
+   <label><input type="checkbox" value="الأربعاء"> الأربعاء</label>
+   <label><input type="checkbox" value="الخميس"> الخميس</label>
+   <label><input type="checkbox" value="الجمعة"> الجمعة</label>
+  </div>
+ </div>
+</section>
+
+<section class="card">
+ <h2>الهدف</h2>
+ <div id="goals"></div>
+ <button class="secondary small no-print" onclick="addPoint('goals','اكتب نقطة الهدف')">＋ إضافة نقطة</button>
+</section>
+
+<section class="card">
+ <h2>المراجعة</h2>
+ <div id="reviews"></div>
+ <button class="secondary small no-print" onclick="addPoint('reviews','اكتب نقطة المراجعة')">＋ إضافة نقطة</button>
+</section>
+
+<section class="card">
+ <h2>التدريبات (Drills)</h2>
+ <div id="drills"></div>
+ <button class="secondary small no-print" onclick="addDrill()">＋ إضافة دريل جديد</button>
+</section>
+
+<div class="actions no-print">
+ <button onclick="saveData()">حفظ البيانات</button>
+ <button class="secondary" onclick="window.print()">طباعة</button>
+ <button class="secondary" onclick="downloadCopy()">حفظ نسخة على الجهاز</button>
+ <button class="danger" onclick="clearForm()">مسح النموذج</button>
+</div>
+<div class="status" id="status" aria-live="polite"></div>
+<footer>نموذج إلكتروني قابل للتعديل والطباعة – Crocodile Swimming</footer>
+</div>
+<script>
+let drillCount=0;
+function addDate(value=''){
+ const box=document.getElementById('dates');
+ const row=document.createElement('div'); row.className='date-row';
+ const input=document.createElement('input'); input.type='date'; input.value=value;
+ const del=document.createElement('button'); del.type='button'; del.className='danger small no-print'; del.textContent='حذف';
+ del.onclick=()=>{row.remove();if(!box.querySelector('.date-row'))addDate()};
+ row.append(input,del);box.append(row);
+}
+function addPoint(containerId,placeholder='اكتب النقطة'){
+ const box=document.getElementById(containerId);
+ const row=document.createElement('div'); row.className='point';
+ const input=document.createElement('input'); input.type='text'; input.placeholder=placeholder;
+ const del=document.createElement('button'); del.type='button'; del.className='danger small no-print'; del.textContent='حذف';
+ del.onclick=()=>row.remove();
+ row.append(input,del); box.appendChild(row); input.focus();
+}
+function addDrill(data={}){
+ drillCount++;
+ const box=document.getElementById('drills');
+ const card=document.createElement('div'); card.className='drill';
+ const head=document.createElement('div'); head.className='drillhead';
+ const title=document.createElement('span'); title.textContent='دريل '+drillCount;
+ const del=document.createElement('button'); del.className='danger small no-print'; del.textContent='حذف الدريل'; del.onclick=()=>card.remove();
+ head.append(title,del);
+ const grid=document.createElement('div'); grid.className='drillgrid';
+ const nameWrap=document.createElement('div'); nameWrap.className='field';
+ const nameLabel=document.createElement('label'); nameLabel.textContent='اسم الدريل';
+ const name=document.createElement('input'); name.className='drill-name'; name.placeholder='اكتب اسم الدريل'; name.value=data.name||'';
+ nameWrap.append(nameLabel,name);
+ const repsWrap=document.createElement('div'); repsWrap.className='field';
+ const repsLabel=document.createElement('label'); repsLabel.textContent='عدد التكرارات';
+ const reps=document.createElement('input'); reps.className='drill-reps'; reps.type='number'; reps.min='0'; reps.placeholder='مثال: 6 × 25 متر'; reps.value=data.reps||'';
+ repsWrap.append(repsLabel,reps);
+ grid.append(nameWrap,repsWrap); card.append(head,grid); box.append(card);
+}
+function values(containerId){return [...document.querySelectorAll('#'+containerId+' .point input')].map(x=>x.value.trim()).filter(Boolean)}
+function collect(){
+ return {unitName:document.getElementById('unitName').value,
+ dates:[...document.querySelectorAll('#dates input[type="date"]')].map(x=>x.value).filter(Boolean),
+ level:document.getElementById('level').value,
+ days:[...document.querySelectorAll('#days input:checked')].map(x=>x.value),
+ goals:values('goals'),reviews:values('reviews'),
+ drills:[...document.querySelectorAll('#drills .drill')].map(d=>({name:d.querySelector('.drill-name').value.trim(),reps:d.querySelector('.drill-reps').value})).filter(d=>d.name||d.reps)};
+}
+function load(data){
+ document.getElementById('unitName').value=data.unitName||'';
+ document.getElementById('dates').innerHTML='';
+ (data.dates|| (data.date ? [data.date] : [])).forEach(v=>addDate(v));
+ if(!(data.dates||[]).length && !data.date)addDate();
+ document.getElementById('level').value=data.level||'';
+ document.querySelectorAll('#days input').forEach(x=>x.checked=(data.days||[]).includes(x.value));
+ document.getElementById('goals').innerHTML=''; document.getElementById('reviews').innerHTML=''; document.getElementById('drills').innerHTML=''; drillCount=0;
+ (data.goals||[]).forEach(v=>{addPoint('goals');document.querySelector('#goals .point:last-child input').value=v});
+ (data.reviews||[]).forEach(v=>{addPoint('reviews');document.querySelector('#reviews .point:last-child input').value=v});
+ (data.drills||[]).forEach(addDrill);
+ if(!data.goals?.length)addPoint('goals');
+ if(!data.reviews?.length)addPoint('reviews');
+ if(!data.drills?.length)addDrill();
+}
+function saveData(){
+ try{localStorage.setItem('crocodile_educational_unit',JSON.stringify(collect()));document.getElementById('status').textContent='تم حفظ البيانات على هذا الجهاز والمتصفح.'}
+ catch(e){document.getElementById('status').textContent='تعذر الحفظ التلقائي في هذا المتصفح. استخدم حفظ نسخة على الجهاز.'}
+}
+function downloadCopy(){
+ const data=collect();
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');
+ a.href=url;a.download='الوحدة-التعليمية-Crocodile.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ document.getElementById('status').textContent='تم تجهيز نسخة البيانات للتنزيل على جهازك.';
+}
+function clearForm(){if(confirm('هل تريد مسح جميع بيانات النموذج؟')){localStorage.removeItem('crocodile_educational_unit');load({});document.getElementById('status').textContent='تم مسح النموذج.'}}
+try{const saved=localStorage.getItem('crocodile_educational_unit');load(saved?JSON.parse(saved):{})}catch(e){load({})}
+</script>
+</body>
+</html>
